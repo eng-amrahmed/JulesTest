@@ -29,9 +29,7 @@ if ticker_symbol:
         else:
             st.error(f"P/E ratio data not available for {ticker_symbol}.")
 
-    except Exception as e:
-        if ticker_symbol == "GOOG":
-            st.warning("For Google's Class C shares (GOOG), data can sometimes be limited. Try 'GOOGL' (Class A shares) for potentially more complete data.")
+    except Exception as e:        
         st.error(f"Error fetching data for {ticker_symbol}: Invalid ticker or data not available.")
         st.error(f"Details: {e}")
 

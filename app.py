@@ -12,6 +12,10 @@ if ticker_symbol:
         ticker = yf.Ticker(ticker_symbol)
         info = ticker.info
 
+        if not info:
+            st.error(f"Could not retrieve information for {ticker_symbol}. The 'info' object is empty.")
+            st.stop()
+
         current_price = info.get('currentPrice') or info.get('regularMarketPrice')
         pe_ratio = info.get('trailingPE') or info.get('forwardPE')
 
@@ -26,6 +30,8 @@ if ticker_symbol:
             st.error(f"P/E ratio data not available for {ticker_symbol}.")
 
     except Exception as e:
+        if ticker_symbol == "GOOG":
+            st.warning("For Google's Class C shares (GOOG), data can sometimes be limited. Try 'GOOGL' (Class A shares) for potentially more complete data.")
         st.error(f"Error fetching data for {ticker_symbol}: Invalid ticker or data not available.")
         st.error(f"Details: {e}")
 
